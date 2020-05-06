@@ -75,6 +75,37 @@ if CLIENT then
 		cam.End2D()
 		render.PopRenderTarget()
 	end
+
+	function SWEP:Initialize()
+		self:AddHUDHelp("door_help_msb1", "door_help_msb2", true)
+
+		return self.BaseClass.Initialize(self)
+	end
+
+	local validDoors = {}
+
+	hook.Add("PlayerSwitchWeapon", "TTT2DoorlockerSwitchWeapon", function(ply, old, new)
+		if IsValid(new) and new:GetClass() == "weapon_ttt_doorlocker" then
+			local doors = door.GetAll()
+
+			for i = 1, #doors do
+				local doorEntity = doors[i]
+
+				if not IsValid(doorEntity) or not doorEntity:PlayerCanOpenDoor()
+					or not door.IsValidNormal(doorEntity:GetClass())
+				then continue end
+
+				validDoors[#validDoors + 1] = doorEntity
+			end
+
+			thermalvision.SetBackgroundColoring(true)
+			thermalvision.Add(validDoors, THERMALVISION_MODE_BOTH)
+		elseif IsValid(old) and old:GetClass() == "weapon_ttt_doorlocker" then
+			thermalvision.Clear()
+			--thermalvision.SetBackgroundColoring(false)
+			--thermalvision.Remove(validDoors)
+		end
+	end)
 end
 
 function SWEP:GetEntity()
