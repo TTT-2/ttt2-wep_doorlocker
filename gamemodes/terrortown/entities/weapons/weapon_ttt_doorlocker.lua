@@ -84,28 +84,27 @@ if CLIENT then
 
 	local validDoors = {}
 
-	hook.Add("PlayerSwitchWeapon", "TTT2DoorlockerSwitchWeapon", function(ply, old, new)
-		if IsValid(new) and new:GetClass() == "weapon_ttt_doorlocker" then
-			local doors = door.GetAll()
+	function SWEP:Holster()
+		thermalvision.SetBackgroundColoring(false)
+		thermalvision.Remove(validDoors)
+	end
 
-			for i = 1, #doors do
-				local doorEntity = doors[i]
+	function SWEP:Deploy()
+		local doors = door.GetAll()
 
-				if not IsValid(doorEntity) or not doorEntity:PlayerCanOpenDoor()
-					or not door.IsValidNormal(doorEntity:GetClass())
-				then continue end
+		for i = 1, #doors do
+			local doorEntity = doors[i]
 
-				validDoors[#validDoors + 1] = doorEntity
-			end
+			if not IsValid(doorEntity) or not doorEntity:PlayerCanOpenDoor()
+				or not door.IsValidNormal(doorEntity:GetClass())
+			then continue end
 
-			thermalvision.SetBackgroundColoring(true)
-			thermalvision.Add(validDoors, THERMALVISION_MODE_BOTH)
-		elseif IsValid(old) and old:GetClass() == "weapon_ttt_doorlocker" then
-			thermalvision.Clear()
-			--thermalvision.SetBackgroundColoring(false)
-			--thermalvision.Remove(validDoors)
+			validDoors[#validDoors + 1] = doorEntity
 		end
-	end)
+
+		thermalvision.SetBackgroundColoring(true)
+		thermalvision.Add(validDoors, THERMALVISION_MODE_BOTH)
+	end
 end
 
 function SWEP:GetEntity()
