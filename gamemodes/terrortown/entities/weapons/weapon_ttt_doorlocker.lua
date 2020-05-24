@@ -53,6 +53,44 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Delay = 0.5
 
+if SERVER then
+	util.AddNetworkString("WeaponDoorlockerUpdate")
+
+	function SWEP:Deploy()
+		net.Start("WeaponDoorlockerUpdate")
+		net.WriteBool(true)
+		net.Send(self:GetOwner())
+
+		-- store owner in extra variable because the owner isn't valid
+		-- once OnDrop is called
+		self.notfiyOwner = self:GetOwner()
+
+		self.BaseClass.Deploy(self)
+	end
+
+	function SWEP:Holster(wep)
+		net.Start("WeaponDoorlockerUpdate")
+		net.WriteBool(false)
+		net.Send(self:GetOwner())
+
+		self.notfiyOwner = nil
+
+		return self.BaseClass.Holster(self, wep)
+	end
+
+	function SWEP:OnDrop()
+		self.BaseClass.OnDrop(self)
+
+		if not IsValid(self.notfiyOwner) then return end
+
+		net.Start("WeaponDoorlockerUpdate")
+		net.WriteBool(false)
+		net.Send(self.notfiyOwner)
+
+		self.notfiyOwner = nil
+	end
+end
+
 if CLIENT then
 	local matScreen = Material("models/weapons/v_toolgun/screen")
 	local txBackground = surface.GetTextureID("models/weapons/doorlocker/screen_bg")
@@ -84,27 +122,27 @@ if CLIENT then
 
 	local validDoors = {}
 
-	function SWEP:Holster()
-		thermalvision.SetBackgroundColoring(false)
-		thermalvision.Remove(validDoors)
-	end
+	net.Receive("WeaponDoorlockerUpdate", function()
+		if net.ReadBool() then
+			local doors = door.GetAll()
 
-	function SWEP:Deploy()
-		local doors = door.GetAll()
+			for i = 1, #doors do
+				local doorEntity = doors[i]
 
-		for i = 1, #doors do
-			local doorEntity = doors[i]
+				if not IsValid(doorEntity) or not doorEntity:PlayerCanOpenDoor()
+					or not door.IsValidNormal(doorEntity:GetClass())
+				then continue end
 
-			if not IsValid(doorEntity) or not doorEntity:PlayerCanOpenDoor()
-				or not door.IsValidNormal(doorEntity:GetClass())
-			then continue end
+				validDoors[#validDoors + 1] = doorEntity
+			end
 
-			validDoors[#validDoors + 1] = doorEntity
+			thermalvision.SetBackgroundColoring(true)
+			thermalvision.Add(validDoors, THERMALVISION_MODE_BOTH)
+		else
+			thermalvision.SetBackgroundColoring(false)
+			thermalvision.Remove(validDoors)
 		end
-
-		thermalvision.SetBackgroundColoring(true)
-		thermalvision.Add(validDoors, THERMALVISION_MODE_BOTH)
-	end
+	end)
 end
 
 function SWEP:GetEntity()
