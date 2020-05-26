@@ -205,6 +205,14 @@ function SWEP:PrimaryAttack()
 		wasDestructible = ent:DoorIsDestructible()
 	}
 
+	if IsValid(ent.otherPairDoor) then
+		ent.otherPairDoor.doorlockerData = {
+			ply = owner,
+			time = CurTime(),
+			wasDestructible = ent.otherPairDoor:DoorIsDestructible()
+		}
+	end
+
 	ent:LockDoor(ply)
 	ent:MakeDoorDestructable(true)
 	owner:EmitSound(sounds["lock"])
