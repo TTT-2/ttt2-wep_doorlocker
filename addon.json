@@ -1,0 +1,11 @@
+{
+	"title"		:	"[TTT2] Door Locker [WEAPON]",
+	"type"		:	"effects",
+    "tags"		:	[ "realism", "fun" ],
+    "ignore"    : [
+        ".git/*",
+        ".gitignore",
+        "README.md",
+		"ttt2-wep_doorlocker.jpg"
+    ]
+}

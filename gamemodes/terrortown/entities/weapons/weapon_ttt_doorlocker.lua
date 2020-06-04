@@ -253,8 +253,17 @@ function SWEP:SecondaryAttack()
 	end
 
 	ent:UnlockDoor(ply)
-	ent:MakeDoorDestructable(ent.doorlockerData.wasDestructible)
 	owner:EmitSound(sounds["unlock"])
+
+	ent:MakeDoorDestructable(ent.doorlockerData.wasDestructible)
+
+	ent.doorlockerData = nil
+
+	if IsValid(ent.otherPairDoor) then
+		ent.otherPairDoor:MakeDoorDestructable(ent.otherPairDoor.doorlockerData.wasDestructible)
+
+		ent.otherPairDoor.doorlockerData = nil
+	end
 
 	LANG.Msg(owner, "door_now_unlocked", nil, MSG_MSTACK_PLAIN)
 end
