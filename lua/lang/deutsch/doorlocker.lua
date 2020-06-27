@@ -9,5 +9,5 @@ L["door_not_locked"] = "Diese Tür kann nicht entsperrt werden, da sie nicht ver
 L["door_locked_not_you"] = "Diese Tür kann nicht entsperrt werden, da sie nicht von dir versperrt ist."
 L["door_now_locked"] = "Erfolgreich Tür versperrt."
 L["door_now_unlocked"] = "Erfolgreich Tür entsperrt."
-L["door_help_msb1"] = "{primaryfire} um Tür zu versperren"
-L["door_help_msb2"] = "{secondaryfire} um Tür zu entsperren"
+L["door_help_msb1"] = "Versperrt Tür"
+L["door_help_msb2"] = "Entsperrt Tür"

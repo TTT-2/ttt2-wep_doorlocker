@@ -115,7 +115,7 @@ if CLIENT then
 	end
 
 	function SWEP:Initialize()
-		self:AddHUDHelp("door_help_msb1", "door_help_msb2", true)
+		self:AddTTT2HUDHelp("door_help_msb1", "door_help_msb2")
 
 		return self.BaseClass.Initialize(self)
 	end
