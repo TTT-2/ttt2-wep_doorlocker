@@ -1,4 +1,4 @@
-L = LANG.GetLanguageTableReference("italiano")
+local L = LANG.GetLanguageTableReference("italiano")
 
 L["weapon_doorlocker_name"] = "Blocca Porte"
 L["weapon_doorlocker_desc"] = "Blocca le porte per nasconderti. Ma stai attento che le porte chiuse possono essere distrutte."
