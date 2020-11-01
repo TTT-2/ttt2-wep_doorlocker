@@ -1,4 +1,4 @@
-L = LANG.GetLanguageTableReference("english")
+L = LANG.GetLanguageTableReference("french")
 
 L["weapon_doorlocker_name"] = "Verrouilleur de porte"
 L["weapon_doorlocker_desc"] = "Verrouillez les portes pour vous cacher dans les zones sécurisées. Mais attention, les portes verrouillées deviennent destructibles."
