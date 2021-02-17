@@ -1,4 +1,4 @@
-L = LANG.GetLanguageTableReference("Русский")
+L = LANG.GetLanguageTableReference("ru")
 
 L["weapon_doorlocker_name"] = "Дверной запиратор"
 L["weapon_doorlocker_desc"] = "Запирайте двери, чтобы спрятаться в секретных зонах. Но помните, что запертые двери становятся разрушаемыми."

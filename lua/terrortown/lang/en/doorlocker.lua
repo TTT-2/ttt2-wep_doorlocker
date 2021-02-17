@@ -1,4 +1,4 @@
-L = LANG.GetLanguageTableReference("english")
+L = LANG.GetLanguageTableReference("en")
 
 L["weapon_doorlocker_name"] = "Doorlocker"
 L["weapon_doorlocker_desc"] = "Lock doors to hideout in secreat areas. But beware that locked doors become destructible."

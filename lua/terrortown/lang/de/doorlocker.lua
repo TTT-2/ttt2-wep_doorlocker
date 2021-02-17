@@ -1,4 +1,4 @@
-L = LANG.GetLanguageTableReference("deutsch")
+L = LANG.GetLanguageTableReference("de")
 
 L["weapon_doorlocker_name"] = "Türversperrer"
 L["weapon_doorlocker_desc"] = "Versperrt Türen, damit du in geheimen Verstecken warten kannst. Doch vorsicht, versperrte Türen sind zerstörbar."
